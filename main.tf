@@ -124,7 +124,7 @@ resource "aws_instance" "web_server" {
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public.id
   vpc_security_group_ids = [
-    aws_security_group.web_tier_sg.id
+    aws_security_group.web_sg.id
   ]
   user_data = <<-EOF
                 #!/bin/bash
