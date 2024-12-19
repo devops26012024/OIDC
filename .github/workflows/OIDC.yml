@@ -1,7 +1,7 @@
 name: "Terraform AWS Deployment with OIDC"
 
 on:
-  push:
+ # push:
     branches:
       - main
 
@@ -37,27 +37,3 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply tfplan
-
-  destroy:
-    name: "Destroy AWS Resources"
-    needs: terraform
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::970547381233:role/oidc
-          aws-region: ap-south-1
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.5.0
-
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
