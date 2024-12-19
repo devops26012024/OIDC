@@ -1,7 +1,7 @@
 name: "Terraform AWS Deployment with OIDC"
 
 on:
- # push:
+  push:
     branches:
       - main
 
