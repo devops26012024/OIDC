@@ -1,6 +1,6 @@
 name: Destroy resources 
   
-on:
+on: 
   workflow_dispatch:
   
 permissions:
