@@ -123,8 +123,8 @@ resource "aws_instance" "web_server" {
   ami           = "ami-053b12d3152c0cc71" 
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public.id
-  security_groups = [
-    aws_security_group.web_sg.name
+  vpc_security_group_ids = [
+    aws_security_group.web_tier_sg.id
   ]
   user_data = <<-EOF
                 #!/bin/bash
