@@ -21,6 +21,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::970547381233:role/oidc
           aws-region: ap-south-1
+          role-session-name: DestroySession
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
