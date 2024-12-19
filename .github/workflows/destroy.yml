@@ -1,35 +1,34 @@
-name: Destroy resources 
-  
-on: 
+name: Destroy Terraform Workflow
+
+on:
   workflow_dispatch:
-  
 permissions:
   contents: read
   id-token: write
-  
-jobs:  
-  destroy:
-    name: "Destroy AWS Resources"
+
+jobs:
+  terraform:
+    name: Terraform Workflow
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::970547381233:role/oidc
-          aws-region: ap-south-1
-          role-session-name: DestroySession
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.6
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.5.0
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::970547381233:role/oidc
+        aws-region: ap-south-1
+        role-session-name: TerraformDestroySession
+        
+    - name: Terraform Init
+      run: terraform init
 
-      - name: Terraform init
-        run: terraform init          
-
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
